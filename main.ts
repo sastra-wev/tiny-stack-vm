@@ -12,7 +12,7 @@ function run(g,q){
   if(t>=1e6)return fin(10);
   if(p<0||p>=g.length)return fin(9);
   const op=g[p],fit=n=>p+n<g.length;
-  const i16=()=>{const r=g[p+1]|g[p+2]<<8;return r<<16>>16};
+  const i16=()=>(g[p+1]|g[p+2]<<8)<<16>>16;
   const u16=()=>g[p+1]|g[p+2]<<8;
   let a,b,r;
   switch(op){
@@ -72,7 +72,7 @@ function run(g,q){
  }
 }
 for(let k=1;k<=40;k++){
- const id="i"+String(k).padStart(3,"0");
+ const id="i"+(""+k).padStart(3,"0");
  const w=run(rb(join(D,id,"program.bin")),rb(join(D,id,"input.bin")));
  mkdirSync(join(E,id),{recursive:true});
  writeFileSync(join(E,id,"stdout.bin"),w.o);
