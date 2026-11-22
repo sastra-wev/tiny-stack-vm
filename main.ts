@@ -1,8 +1,3 @@
-// Tiny stack VM: answers a whole make.fun set of 40 programs. Reads
-// program.bin + input.bin per instance from MAKEFUN_INPUT_DIR (default
-// /input), writes stdout.bin + exit.txt to MAKEFUN_OUTPUT_DIR (/output).
-// Node 22, standard library only. ISA: 32-bit wrapping ints, 256-value
-// data stack, 64-deep call stack, 256 words of memory, ten traps.
 import{mkdirSync,readFileSync,writeFileSync}from"node:fs";
 import{join}from"node:path";
 const D=process.env.MAKEFUN_INPUT_DIR??"/input",E=process.env.MAKEFUN_OUTPUT_DIR??"/output";
@@ -53,14 +48,9 @@ function run(g,q){
     a=s.pop();if(a<0||a>255)return fin(6);m[a]=s.pop();p++;break;
    case 0x50:
     if(need(1))return fin(2);
-    a=s.pop();
-    r=a<0?1:0;
-    b=a<0?-a:a;
-    let d=0,c=[0,0,0,0,0,0,0,0,0,0,0];
-    do{c[d++]=48+b%10;b=(b/10)|0}while(b);
-    if(o.length+r+d>65536)return fin(11);
-    if(r)o.push(45);
-    for(let i=d-1;i>=0;i--)o.push(c[i]);
+    r=""+s.pop();
+    if(o.length+r.length>65536)return fin(11);
+    for(let i=0;i<r.length;i++)o.push(r.charCodeAt(i));
     p++;break;
    case 0x51:
     if(need(1))return fin(2);
