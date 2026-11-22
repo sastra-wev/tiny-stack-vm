@@ -1,7 +1,7 @@
 import{mkdirSync,readFileSync,writeFileSync}from"node:fs";
 import{join}from"node:path";
 const D=process.env.MAKEFUN_INPUT_DIR??"/input",E=process.env.MAKEFUN_OUTPUT_DIR??"/output";
-const rb=f=>{try{return new Uint8Array(readFileSync(f))}catch{return new Uint8Array(0)}};
+const rb=f=>{try{return new Uint8Array(readFileSync(f))}catch{return new Uint8Array}};
 function run(g,q){
  const s=[],k=[],m=new Int32Array(256),o=[];
  let p=0,j=0,t=0;
@@ -50,7 +50,7 @@ function run(g,q){
     if(need(1))return fin(2);
     r=""+s.pop();
     if(o.length+r.length>65536)return fin(11);
-    for(let i=0;i<r.length;i++)o.push(r.charCodeAt(i));
+    for(let i=0;i<r.length;)o.push(r.charCodeAt(i++));
     p++;break;
    case 0x51:
     if(need(1))return fin(2);
